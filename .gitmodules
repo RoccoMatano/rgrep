@@ -1,0 +1,3 @@
+[submodule "src/romato"]
+	path = src/romato
+	url = git@github.com:RoccoMatano/romato.git
