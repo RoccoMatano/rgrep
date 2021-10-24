@@ -173,32 +173,6 @@ bool TextFile::load(const Yast& path, bool prefer_utf8, bool include_binary)
 
     UnmapViewOfFile(mapping);
 
-    if (m_encoding != TE_BINARY)
-    {
-        // expect an average line length of 32
-        m_line_ends.reserve(m_content.length() / 32);
-        PCWSTR it = m_content.str();
-        PCWSTR const begin = it;
-        PCWSTR const end = it + m_content.length();
-        while(it < end)
-        {
-            if (*it == L'\r')
-            {
-                size_t pos = it++ - begin;
-                if (*it == L'\n')
-                {
-                    pos += 1;
-                }
-                m_line_ends.push_back(pos);
-            }
-            else if (*it == L'\n')
-            {
-                m_line_ends.push_back(it - begin);
-            }
-            ++it;
-        }
-        m_line_ends.push_back(m_content.length());
-    }
     return true;
 }
 
@@ -226,6 +200,31 @@ LineInfos TextFile::lines_from_ranges(const ranges& bounds)
         } while (++rit != bounds.end());
         return result;
     }
+
+    // determine line ends, expecting an average line length of 32
+    m_line_ends.reserve(m_content.length() / 32);
+    PCWSTR it = m_content.str();
+    PCWSTR const begin = it;
+    PCWSTR const end = it + m_content.length();
+    while(it < end)
+    {
+        if (*it == L'\r')
+        {
+            size_t pos = it++ - begin;
+            if (*it == L'\n')
+            {
+                pos += 1;
+            }
+            m_line_ends.push_back(pos);
+        }
+        else if (*it == L'\n')
+        {
+            m_line_ends.push_back(it - begin);
+        }
+        ++it;
+    }
+    m_line_ends.push_back(m_content.length());
+
 
     auto lit = m_line_ends.begin();
     auto const first_line = lit;
