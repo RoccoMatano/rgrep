@@ -29,7 +29,7 @@
 #include "rgrep_dlg.h"
 #include "shoddy_cmdl_parser.h"
 
-void EntryPoint()
+void entry_point()
 {
     CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 

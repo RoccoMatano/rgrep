@@ -6,7 +6,7 @@ if __name__ == '__main__':
 ################################################################################
 
 import msvc_env
-cfg = msvc_env.BuildCfg(entry='EntryPoint')
+cfg = msvc_env.BuildCfg()
 env = msvc_env.MsvcEnvironment(cfg)
 env.set_build_dir('src', 'build')
 env.Append(CCFLAGS=['/DUNICODE', '/Isrc', '/Isrc/pcre2_16', '/Isrc/romato/src'])
@@ -82,3 +82,7 @@ libs = [
     "ole32.lib",
     ]
 exe = env.Program('rgrep.exe', objs + res, LIBS=libs)
+
+if env.cfg.arch == msvc_env.X64:
+    # ignore command errors by prepending '-'
+    env.Command(None, exe, Action('-squab $SOURCE', 'Squabbing $SOURCE'))
