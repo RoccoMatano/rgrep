@@ -1,7 +1,7 @@
 if __name__ == '__main__':
-    import sys, subprocess
-    sys.argv[0:1] = ['scons', '-f', __file__]
-    sys.exit(subprocess.run(sys.argv, shell=True).returncode)
+    import sys, shutil, subprocess
+    sys.argv[0:1] = [sys.executable, shutil.which("scons"), "-f", __file__]
+    sys.exit(subprocess.run(sys.argv).returncode)
 
 ################################################################################
 
