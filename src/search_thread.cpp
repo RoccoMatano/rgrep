@@ -3,7 +3,7 @@
 // This file is part of rgrep.
 // rgrep is based on PCRE2 (see pcre2_16\LICENCE).
 //
-// Copyright 2018-2021 Rocco Matano
+// Copyright 2018-2022 Rocco Matano
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
