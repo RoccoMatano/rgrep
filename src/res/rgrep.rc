@@ -60,26 +60,26 @@ IDI_RGREP                     ICON                    "rgrep.ico"
 
 ////////////////////////////////////////////////////////////////////////////////
 
-IDD_RGREP DIALOGEX 0, 0, 433, 248
+IDD_RGREP DIALOGEX 0, 0, 469, 248
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_POPUP |
       WS_VISIBLE | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
 CAPTION "rgrep"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    GROUPBOX        "Locat&ion",IDC_LOCATION_GROUP,7,7,419,29
-    COMBOBOX        IDC_SEARCH_PATH,14,17,383,240,
+    GROUPBOX        "Locat&ion",IDC_LOCATION_GROUP,7,7,455,29
+    COMBOBOX        IDC_SEARCH_PATH,14,17,419,240,
                     CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "...",IDC_SEARCH_PATH_BROWSE,404,17,15,14
-    GROUPBOX        "Search term",IDC_SEARCH_GROUP,7,38,419,74
+    PUSHBUTTON      "...",IDC_SEARCH_PATH_BROWSE,440,17,15,14
+    GROUPBOX        "Search term",IDC_SEARCH_GROUP,7,38,455,74
     CONTROL         "Rege&x search",IDC_RADIO_REGEX,"Button",
                     BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,14,49,86,10
     CONTROL         "&Literal search",IDC_RADIO_LITERAL,"Button",
                     BS_AUTORADIOBUTTON | WS_TABSTOP,108,49,93,10
     LTEXT           "Search f&or:",IDC_SERACH_FOR_LABEL,14,62,46,8
-    COMBOBOX        IDC_SEARCH_TEXT,80,61,339,240,
+    COMBOBOX        IDC_SEARCH_TEXT,80,61,375,240,
                     CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Replace &with:",IDC_REPLACE_TEXT_LABEL,14,80,64,8
-    COMBOBOX        IDC_REPLACE_TEXT,80,78,339,240,
+    COMBOBOX        IDC_REPLACE_TEXT,80,78,375,240,
                     CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     CONTROL         "&Case-sensitive",IDC_CASE_SENSITIVE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,14,95,85,10
@@ -89,32 +89,32 @@ BEGIN
                     BS_AUTOCHECKBOX | WS_TABSTOP,188,95,85,10
     CONTROL         "&Multiline anchors",IDC_MULTI_LINE,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,275,95,85,10
-    GROUPBOX        "Scope",IDC_SCOPE_GROUP,7,114,419,44
+    GROUPBOX        "Scope",IDC_SCOPE_GROUP,7,114,455,44
     LTEXT           "&Exclude dirs (Regex):",IDC_EXCLUDE_LABEL,14,124,73,8
     COMBOBOX        IDC_EXCLUDE_PATTERN,91,122,122,240,
                     CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Include s&ubfolders",IDC_SEARCH_SUBFOLDERS,"Button",
                     BS_AUTOCHECKBOX | WS_TABSTOP,14,141,89,10
     CONTROL         "Include binar&y files",IDC_SEARCH_BINARY,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,108,141,86,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP,104,141,86,10
     CONTROL         "Create &backup files",IDC_CREATE_BACKUP,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP | WS_GROUP,202,141,92,10
+                    BS_AUTOCHECKBOX | WS_TABSTOP | WS_GROUP,190,141,76,10
     LTEXT           "File &Names:\n'|' to separate patterns, prefix '-' excludes",
-                    IDC_INCLUDE_LABEL,231,122,66,34
-    COMBOBOX        IDC_INCLUDE_PATTERN,297,122,122,240,
+                    IDC_INCLUDE_LABEL,267,122,66,34
+    COMBOBOX        IDC_INCLUDE_PATTERN,333,122,122,240,
                     CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Re&gex",IDC_INCLUDE_REGEX,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,297,141,66,10
+                    BS_AUTORADIOBUTTON | WS_GROUP | WS_TABSTOP,333,141,66,10
     CONTROL         "Wil&dcard",IDC_INCLUDE_WILDCARD,"Button",
-                    BS_AUTORADIOBUTTON | WS_TABSTOP,367,141,52,10
+                    BS_AUTORADIOBUTTON | WS_TABSTOP,403,141,52,10
     PUSHBUTTON      "Settings",IDC_SETTINGS,21,163,62,14
-    CONTROL         "",IDC_PROGRESS,"msctls_progress32",0,88,163,191,14
-    PUSHBUTTON      "Replace",IDC_DO_REPLACE,284,163,62,14
-    DEFPUSHBUTTON   "&Search",IDC_DO_SEARCH,350,163,62,14
-    GROUPBOX        "Search &results",IDC_SEARCH_RESULTS_GROUP,7,179,419,62
+    CONTROL         "",IDC_PROGRESS,"msctls_progress32",0,88,163,227,14
+    PUSHBUTTON      "Replace",IDC_DO_REPLACE,320,163,62,14
+    DEFPUSHBUTTON   "&Search",IDC_DO_SEARCH,386,163,62,14
+    GROUPBOX        "Search &results",IDC_SEARCH_RESULTS_GROUP,7,179,455,62
     CONTROL         "",IDC_RESULT_LIST,"SysListView32",
                     LVS_REPORT | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,
-                    14,190,405,36
+                    14,190,441,36
     LTEXT           "",IDC_SEARCH_INFO,14,230,405,8
 END
 
