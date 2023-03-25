@@ -3,7 +3,7 @@
 // This file is part of rgrep.
 // rgrep is based on PCRE2 (see pcre2_16\LICENCE).
 //
-// Copyright 2018-2022 Rocco Matano
+// Copyright 2018-2023 Rocco Matano
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -28,7 +28,7 @@
 #pragma once
 
 // please keep the following 4 defines up-to-date
-#define APP_VERSION_HI          0
+#define APP_VERSION_HI          1
 #define APP_VERSION_LO          11
 #define APP_REVISION            17
 #define APP_BUILD_NUMBER        69
@@ -48,5 +48,5 @@
 #define APP_VERSION_STRING  APP_STRING_BASE
 
 #define COMPANY_NAME    "RoMa"
-#define COPYRIGHT       L"\251 RoMa 2018-2022"
+#define COPYRIGHT       L"\251 RoMa 2018-2023"
 #define PRODUCT_NAME    "rgrep"
