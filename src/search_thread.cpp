@@ -127,10 +127,7 @@ DWORD SearchThread::thread_proc(void* pctxt)
         Yast name_only(diter.get_info()->cFileName);
         if (is_dir)
         {
-            go_down = (
-                params.search_subdirs &&
-                !self->excl_dir(name_only, full_name)
-                );
+            go_down = params.search_subdirs && !self->excl_dir(name_only);
         }
         else
         {
@@ -151,14 +148,12 @@ DWORD SearchThread::thread_proc(void* pctxt)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-bool SearchThread::excl_dir(const Yast& name_only, const Yast& full_name)
+bool SearchThread::excl_dir(const Yast& name)
 {
     range r;
     return (
-        m_params.rx_exclude != nullptr && (
-            m_params.rx_exclude->search(r, name_only) ||
-            m_params.rx_exclude->search(r, full_name)
-            )
+        m_params.rx_exclude != nullptr &&
+        m_params.rx_exclude->search(r, name)
         );
 }
 

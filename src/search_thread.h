@@ -96,7 +96,7 @@ protected:
     void set_current_file(const Yast& current_file);
 
     static DWORD WINAPI thread_proc(void* pctxt);
-    bool excl_dir(const Yast& name_only, const Yast& full_name);
+    bool excl_dir(const Yast& name);
     bool incl_file(const Yast& name);
     void search_file(const Yast& path, UINT prefix_len, YastSet& backup_files);
     bool do_replace(TextFile& txt_file, YastSet& backup_files);
