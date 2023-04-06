@@ -1,4 +1,4 @@
-if __name__ == '__main__':
+if __name__ == "__main__":
     import sys, shutil, subprocess
     sys.argv[0:1] = [sys.executable, shutil.which("scons"), "-f", __file__]
     sys.exit(subprocess.run(sys.argv).returncode)
@@ -8,15 +8,13 @@ if __name__ == '__main__':
 import msvc_env
 cfg = msvc_env.BuildCfg()
 env = msvc_env.MsvcEnvironment(cfg)
-env.set_build_dir('src', 'build')
-env.Append(CCFLAGS=['/DUNICODE', '/Isrc', '/Isrc/pcre2_16', '/Isrc/romato/src'])
+env.set_build_dir("src", "build")
+env.Append(CPPPATH=[".", "pcre2_16", "romato/src"])
+env.Append(CPPDEFINES=["UNICODE", "HAVE_CONFIG_H"])
 
 env_pcre = env.Clone()
-env_pcre.modify_flags(
-    'CCFLAGS',
-    ['/DHAVE_CONFIG_H', '/D_CRTIMP=', '/D_CRTIMP2_PURE=', '/D_VCRTIMP=', '/W3'],
-    ['/W4']
-    )
+env_pcre.Append(CPPDEFINES=["_CRTIMP=", "_CRTIMP2_PURE=", "_VCRTIMP="])
+env_pcre.modify_flags("CCFLAGS", ["/W3"], ["/W4"])
 pcre_src = [
     "pcre2_16/pcre2_auto_possess.c",
     "pcre2_16/pcre2_chartables.c",
@@ -39,7 +37,7 @@ pcre_src = [
     "pcre2_16/pcre2_adapt.c",
     ]
 objs = env_pcre.Object(source=pcre_src)
-objs += env.no_gl_object('romato/src/romato_no_ltcg.cpp')
+objs += env.no_gl_object("romato/src/romato_no_ltcg.cpp")
 
 env.use_pch()
 
@@ -79,8 +77,8 @@ libs = [
     "comctl32.lib",
     "ole32.lib",
     ]
-exe = env.Program('rgrep.exe', objs + res, LIBS=libs)
+exe = env.Program("rgrep.exe", objs + res, LIBS=libs)
 
 if env.cfg.arch == msvc_env.X64:
     # ignore command errors by prepending '-'
-    env.Command(None, exe, Action('-squab $SOURCE', 'Squabbing $SOURCE'))
+    env.Command(None, exe, Action("-squab $SOURCE", "Squabbing $SOURCE"))
