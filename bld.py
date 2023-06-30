@@ -80,5 +80,4 @@ libs = [
 exe = env.Program("rgrep.exe", objs + res, LIBS=libs)
 
 if env.cfg.arch == msvc_env.X64:
-    # ignore command errors by prepending '-'
-    env.Command(None, exe, Action("-squab $SOURCE", "Squabbing $SOURCE"))
+    env.Squab(None, exe)

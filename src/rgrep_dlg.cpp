@@ -484,12 +484,27 @@ void GrepDlg::OpenFileFromList(int idx, bool in_explorer)
         {
             Yast param_str;
             PCWSTR param = nullptr;
+            Yast tc(512);
             if (in_explorer)
             {
-                param_str.format(L"/Select,\"%s\"", path);
-                path = L"explorer.exe";
+                DWORD res = GetEnvironmentVariable(
+                    L"COMMANDER_EXE",
+                    tc,
+                    tc.length()
+                    );
+                if (res != 0 && res <= tc.length())
+                {
+                    param_str.format(L"/O /S \"/L=%s\"", path);
+                    path = tc;
+                }
+                else
+                {
+                    param_str.format(L"/Select,\"%s\"", path);
+                    path = L"explorer.exe";
+                }
                 param = param_str;
             }
+            TRACE("shex: '%S' '%S'\n", path, param);
             ShellExecute(
                 m_hWnd,
                 nullptr,
