@@ -37,7 +37,6 @@ pcre_src = [
     "pcre2_16/pcre2_adapt.c",
     ]
 objs = env_pcre.Object(source=pcre_src)
-objs += env.no_gl_object("romato/src/romato_no_ltcg.cpp")
 
 env.use_pch()
 
@@ -68,6 +67,7 @@ objs += env.Object(source=src)
 res = env.RES(source="res/rgrep.rc")
 
 libs = [
+    env.ntdll_lib(),
     "kernel32.lib",
     "advapi32.lib",
     "user32.lib",
