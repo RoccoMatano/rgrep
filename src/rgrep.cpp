@@ -39,7 +39,7 @@ void entry_point()
 
     GrepDlg dlg(parser.get_val(L"path"));
     Yast str_font_size(parser.get_val(L"fontsize"));
-    int font_size = StrToInt(str_font_size.str());
+    int font_size = _wtoi(str_font_size.str());
     TRACE("font_size = %d (%S)\n", font_size, str_font_size.str());
     if (font_size < 6 || font_size > 28)
     {

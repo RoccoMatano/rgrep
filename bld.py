@@ -80,4 +80,8 @@ libs = [
 exe = env.Program("rgrep.exe", objs + res, LIBS=libs)
 
 if env.cfg.arch == msvc_env.X64:
-    env.Squab(None, exe)
+    sexe = env.Squab(None, exe)
+    env.Default(sexe)
+else:
+    env.Default(exe)
+env.install_relative_to_parent_dir("bin", exe)
