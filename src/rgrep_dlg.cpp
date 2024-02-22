@@ -111,7 +111,11 @@ void GrepDlg::SaveSettings()
 
     WINDOWPLACEMENT wp { sizeof(wp) };
     GetWindowPlacement(m_hWnd, &wp);
-    WriteRegBinary(rkey, L"placement", &wp, sizeof(wp));
+    // only save normal positions
+    if (wp.showCmd == SW_NORMAL)
+    {
+        WriteRegBinary(rkey, L"placement", &wp, sizeof(wp));
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
