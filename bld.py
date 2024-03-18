@@ -1,13 +1,13 @@
-if __name__ == "__main__":
-    import sys, shutil, subprocess
-    sys.argv[0:1] = [sys.executable, shutil.which("scons"), "-f", __file__]
+if __name__ == '__main__':
+    import sys, subprocess
+    sys.argv[0:1] = [sys.executable, "-m", "SCons", "-f", __file__]
     sys.exit(subprocess.run(sys.argv).returncode)
 
 ################################################################################
 
-import msvc_env
-cfg = msvc_env.BuildCfg()
-env = msvc_env.MsvcEnvironment(cfg)
+import scons_msvc_env as msvc_env
+
+env = msvc_env.MsvcEnvironment()
 env.set_build_dir("src", "build")
 env.Append(CPPPATH=[".", "pcre2_16", "romato/src"])
 env.Append(CPPDEFINES=["UNICODE", "HAVE_CONFIG_H"])
