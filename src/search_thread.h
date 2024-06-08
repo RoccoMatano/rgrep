@@ -44,7 +44,7 @@ typedef cvector<SearchResult> SearchResults;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-typedef void (*NEXT_FILE_CB)(void *pCtxt, bool was_searched);
+typedef void (*NEXT_FILE_CB)(void *pCtxt, bool was_searched, PCWSTR name);
 typedef void (*END_SEARCH_CB)(void *pCtxt);
 typedef void (*MATCH_FOUND_CB)(
     void *pCtxt,
@@ -81,19 +81,14 @@ public:
     bool start(SearchParams& params);
     void cancel();
     bool is_running();
-    Yast get_current_file();
 
 protected:
     SearchParams        m_params;
     SearchResult        m_result;
-    SRWLOCK             m_lock;
-    Yast                m_current_file;
     volatile LONG       m_running;
     volatile LONG       m_canceled;
 
     typedef cset<Yast> YastSet;
-
-    void set_current_file(const Yast& current_file);
 
     static DWORD WINAPI thread_proc(void* pctxt);
     bool excl_dir(const Yast& name);

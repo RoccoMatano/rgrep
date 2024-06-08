@@ -59,6 +59,7 @@ private:
     Yast                m_viewer_cmd;
     Yast                m_initial_path;
     Yast                m_csv_sep;
+    Yast                m_current_file;
     HMENU               m_ctxt_menu;
     HWND                m_last_focus;
     UINT                m_search_flags;
@@ -94,7 +95,7 @@ private:
     void CheckValidExcludeDir();
     void CheckValidIncludeFile();
     INT_PTR OnCtrlColor(HWND ctrl, HDC hdc);
-    void UpdateInfo(bool include_current = false);
+    void UpdateInfo();
     void AutoSizeColumns();
     bool OkToModifyWithoutBackups(const Yast& search, const Yast& replace);
     bool OnContextMenu(BaseWnd wnd, CPoint pt);
@@ -114,14 +115,14 @@ private:
 
     // Callbacks from search thread
     // These need to switch to the GUI thread.
-    static void OnNext(void *pCtxt, bool was_searched);
+    static void OnNext(void *pCtxt, bool was_searched, PCWSTR name);
     static void OnEndSearch(void *pCtxt);
     static void OnMatch(void *pCtxt, size_t num_matches, SearchResult& result);
 
-    static const UINT WM_APP_FOUND_SEARCH = WM_APP + 0;
-    static const UINT WM_APP_PROGRESS     = WM_APP + 1;
-    static const UINT WM_APP_END_SEARCH   = WM_APP + 2;
-    static const UINT WM_APP_HACK_INIT    = WM_APP + 3;
+    static const UINT WM_APP_FOUND_MATCH = WM_APP + 0;
+    static const UINT WM_APP_PROGRESS    = WM_APP + 1;
+    static const UINT WM_APP_END_SEARCH  = WM_APP + 2;
+    static const UINT WM_APP_HACK_INIT   = WM_APP + 3;
 
     static const UINT LABEL_TIMER = 1;
     static const UINT COL_NAME = 0;

@@ -393,7 +393,7 @@ INT_PTR GrepDlg::OnMessage(UINT msg, WPARAM wp, LPARAM lp)
             return false;
 
         case WM_TIMER:
-            UpdateInfo(true);
+            UpdateInfo();
             return true;
 
         case WM_SYSCOMMAND:
@@ -405,11 +405,10 @@ INT_PTR GrepDlg::OnMessage(UINT msg, WPARAM wp, LPARAM lp)
             }
             return false;
 
-        case WM_APP_FOUND_SEARCH:
+        case WM_APP_FOUND_MATCH:
             m_num_file_matches += 1;
             m_num_matches += static_cast<UINT>(wp);
             AddResult(i2p<SearchResult*>(lp));
-            UpdateInfo();
             return true;
 
         case WM_APP_PROGRESS:
@@ -418,6 +417,7 @@ INT_PTR GrepDlg::OnMessage(UINT msg, WPARAM wp, LPARAM lp)
                 m_num_searched++;
             }
             m_num_processed++;
+            m_current_file = i2p<PCWSTR>(lp);
             return true;
 
         case WM_APP_END_SEARCH:
@@ -426,9 +426,10 @@ INT_PTR GrepDlg::OnMessage(UINT msg, WPARAM wp, LPARAM lp)
             progress.SendMessage(PBM_SETMARQUEE, 0, 0);
             progress.ModifyStyle(PBS_MARQUEE, 0);
             progress.SendMessage(PBM_SETPOS, 0, 0);
-            UpdateInfo();
             GetItem(IDC_DO_SEARCH).SetText(L"&Search");
             KillTimer(LABEL_TIMER);
+            m_current_file = L"";
+            UpdateInfo();
             AutoSizeColumns();
             SetFocus(m_last_focus);
             return true;
@@ -991,7 +992,7 @@ void GrepDlg::InitializePosition(WINDOWPLACEMENT* pwp)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void GrepDlg::UpdateInfo(bool include_current)
+void GrepDlg::UpdateInfo()
 {
     static const WCHAR fmt_nc[] = L"Searched %u files, skipped %u files."
         L" Found %u matches in %u files.";
@@ -1004,15 +1005,11 @@ void GrepDlg::UpdateInfo(bool include_current)
         m_num_matches,
         m_num_file_matches
         );
-    if (include_current)
+    if (!m_current_file.is_empty())
     {
-        Yast current_file = m_thread.get_current_file();
-        if (!current_file.is_empty())
-        {
-            Yast scan;
-            scan.format(fmt_ic, current_file.str());
-            out += scan;
-        }
+        Yast scan;
+        scan.format(fmt_ic, m_current_file.str());
+        out += scan;
     }
     GetItem(IDC_SEARCH_INFO).SetText(out);
 }
@@ -1187,8 +1184,8 @@ void GrepDlg::StartSearch(bool do_replace)
 
     m_num_processed = m_num_searched = 0;
     m_num_matches = m_num_file_matches = 0;
-    UpdateInfo();
-    SetTimer(LABEL_TIMER, 200);
+    m_current_file = L"";
+    SetTimer(LABEL_TIMER, 100);
 
     if (!m_thread.start(params))
     {
@@ -1262,10 +1259,10 @@ void GrepDlg::AddResult(SearchResult* result)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void GrepDlg::OnNext(void *pCtxt, bool was_searched)
+void GrepDlg::OnNext(void *pCtxt, bool was_searched, PCWSTR name)
 {
     GrepDlg *self = static_cast<GrepDlg*>(pCtxt);
-    self->SendMessage(WM_APP_PROGRESS, was_searched, 0);
+    self->SendMessage(WM_APP_PROGRESS, was_searched, p2lp(name));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1281,7 +1278,7 @@ void GrepDlg::OnEndSearch(void *pCtxt)
 void GrepDlg::OnMatch(void *pCtxt, size_t num_matches, SearchResult& result)
 {
     GrepDlg *self = static_cast<GrepDlg*>(pCtxt);
-    self->SendMessage(WM_APP_FOUND_SEARCH, num_matches, p2lp(&result));
+    self->SendMessage(WM_APP_FOUND_MATCH, num_matches, p2lp(&result));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

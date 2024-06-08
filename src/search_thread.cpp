@@ -32,7 +32,6 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 SearchThread::SearchThread() :
-    m_lock(SRWLOCK_INIT),
     m_running(0),
     m_canceled(0)
 {
@@ -87,25 +86,6 @@ bool SearchThread::is_running()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-Yast SearchThread::get_current_file()
-{
-    AcquireSRWLockExclusive(&m_lock);
-    Yast cf(m_current_file);
-    ReleaseSRWLockExclusive(&m_lock);
-    return cf;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-void SearchThread::set_current_file(const Yast& current_file)
-{
-    AcquireSRWLockExclusive(&m_lock);
-    m_current_file = current_file;
-    ReleaseSRWLockExclusive(&m_lock);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 DWORD SearchThread::thread_proc(void* pctxt)
 {
     SearchThread* self = p2p<SearchThread*>(pctxt);
@@ -132,11 +112,12 @@ DWORD SearchThread::thread_proc(void* pctxt)
         else
         {
             const bool include = self->incl_file(name_only);
+            PCWSTR name = include ? full_name : nullptr;
+            params.next_cb(params.p_ctxt, include, name);
             if (include)
             {
                 self->search_file(full_name, prefix_len, backup_files);
             }
-            params.next_cb(params.p_ctxt, include);
         }
     }
 
@@ -198,7 +179,6 @@ void SearchThread::search_file(
     )
 {
     const bool prefer_utf8 = true;
-    set_current_file(path);
     TextFile tf;
     if (tf.load(path, prefer_utf8, m_params.search_binary))
     {
@@ -263,7 +243,6 @@ void SearchThread::search_file(
                 );
         }
     }
-    set_current_file(Yast());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
