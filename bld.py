@@ -14,14 +14,13 @@ env.Append(CPPDEFINES=["UNICODE", "HAVE_CONFIG_H"])
 
 env_pcre = env.Clone()
 env_pcre.Append(CPPDEFINES=["_CRTIMP=", "_CRTIMP2_PURE=", "_VCRTIMP="])
-env_pcre.modify_flags("CCFLAGS", ["/W3"], ["/W4"])
+env_pcre.modify_flags("CCFLAGS", ["/W3", "/w44244", "/w44267"], ["/W4"])
 pcre_src = [
     "pcre2_16/pcre2_auto_possess.c",
     "pcre2_16/pcre2_chartables.c",
     "pcre2_16/pcre2_compile.c",
     "pcre2_16/pcre2_context.c",
     "pcre2_16/pcre2_find_bracket.c",
-    "pcre2_16/pcre2_jit_compile.c",
     "pcre2_16/pcre2_match.c",
     "pcre2_16/pcre2_match_data.c",
     "pcre2_16/pcre2_newline.c",
