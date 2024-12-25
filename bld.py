@@ -78,7 +78,7 @@ libs = [
     ]
 exe = env.Program("rgrep.exe", objs + res, LIBS=libs)
 
-if env.cfg.arch == msvc_env.X64:
+if env.sqaub_applicable():
     sexe = env.Squab(None, exe)
     env.Default(sexe)
 else:
