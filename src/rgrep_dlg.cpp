@@ -3,7 +3,7 @@
 // This file is part of rgrep.
 // rgrep is based on PCRE2 (see pcre2_16\LICENCE).
 //
-// Copyright 2018-2023 Rocco Matano
+// Copyright 2018-2025 Rocco Matano
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
 // copy of this software and associated documentation files (the "Software"),
@@ -399,7 +399,10 @@ INT_PTR GrepDlg::OnMessage(UINT msg, WPARAM wp, LPARAM lp)
         case WM_SYSCOMMAND:
             if (wp == SYSM_PCRE)
             {
-                static const WCHAR url[] = L"https://www.pcre.org/licence.txt";
+                static const WCHAR url[] = (
+                    L"https://raw.githubusercontent.com/PCRE2Project"
+                    L"/pcre2/refs/heads/master/LICENCE.md"
+                    );
                 ShellExecute(m_hWnd, nullptr, url, nullptr, nullptr, SW_SHOW);
                 return true;
             }
