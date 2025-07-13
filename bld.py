@@ -1,5 +1,5 @@
-if __name__ == '__main__':
-    import sys, subprocess
+if __name__ == "__main__":
+    import sys, subprocess # noqa : E401
     sys.argv[0:1] = [sys.executable, "-m", "SCons", "-f", __file__]
     sys.exit(subprocess.run(sys.argv).returncode)
 
