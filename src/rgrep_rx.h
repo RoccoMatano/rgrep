@@ -53,7 +53,7 @@ public:
     // subject (not just at subject beginning and end).
     static const UINT MULTI_LINE    = 1 << 4;
 
-    typedef std::shared_ptr<rrx> ptr;
+    using ptr = std::shared_ptr<rrx>;
 
     //
     // Constructs a new rrx by compiling the given regular expression.

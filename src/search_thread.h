@@ -40,17 +40,13 @@ struct SearchResult
     UINT            path_prefix_len;
 };
 
-typedef cvector<SearchResult> SearchResults;
+using SearchResults =cvector<SearchResult>;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-typedef void (*NEXT_FILE_CB)(void *pCtxt, bool was_searched, PCWSTR name);
-typedef void (*END_SEARCH_CB)(void *pCtxt);
-typedef void (*MATCH_FOUND_CB)(
-    void *pCtxt,
-    size_t num_matches,
-    SearchResult& result
-    );
+using NEXT_FILE_CB = void(*)(void *pCtxt, bool was_searched, PCWSTR name);
+using END_SEARCH_CB = void(*)(void *pCtxt);
+using MATCH_FOUND_CB = void(*)(void *pCtxt, size_t matches, SearchResult& res);
 
 struct SearchParams
 {
@@ -88,7 +84,7 @@ protected:
     volatile LONG       m_running;
     volatile LONG       m_canceled;
 
-    typedef cset<Yast> YastSet;
+    using YastSet = cset<Yast>;
 
     static DWORD WINAPI thread_proc(void* pctxt);
     bool excl_dir(const Yast& name);

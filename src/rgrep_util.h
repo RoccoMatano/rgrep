@@ -36,13 +36,13 @@ struct range
     size_t end;
 };
 #include "container.h"
-typedef cvector<range> ranges;
+using ranges = cvector<range>;
 
 ////////////////////////////////////////////////////////////////////////////////
 
 // description of lines of a text file
 struct LineInfo { UINT number; Yast text; };
-typedef cvector<LineInfo> LineInfos;
+using LineInfos = cvector<LineInfo>;
 
 ////////////////////////////////////////////////////////////////////////////////
 
