@@ -30,6 +30,7 @@
 #include "sys_icon.h"
 #include "res/resource.h"
 #include "settings_dlg.h"
+#include "pcre2_16/pcre2.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -399,10 +400,11 @@ INT_PTR GrepDlg::OnMessage(UINT msg, WPARAM wp, LPARAM lp)
         case WM_SYSCOMMAND:
             if (wp == SYSM_PCRE)
             {
-                static const WCHAR url[] = (
+                Yast url(
                     L"https://raw.githubusercontent.com/PCRE2Project"
-                    L"/pcre2/refs/heads/master/LICENCE.md"
+                    L"/pcre2/refs/tags/pcre2-%d.%d/LICENCE"
                     );
+                url.format(url, PCRE2_MAJOR, PCRE2_MINOR);
                 ShellExecute(m_hWnd, nullptr, url, nullptr, nullptr, SW_SHOW);
                 return true;
             }
