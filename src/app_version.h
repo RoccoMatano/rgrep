@@ -29,8 +29,8 @@
 
 // please keep the following 4 defines up-to-date
 #define APP_VERSION_HI          1
-#define APP_VERSION_LO          11
-#define APP_REVISION            17
+#define APP_VERSION_LO          17
+#define APP_REVISION            11
 #define APP_BUILD_NUMBER        69
 
 //////////////////////////////////////////////////////////////////////////////
