@@ -1135,8 +1135,8 @@ bool GrepDlg::PrepareSearchParams(SearchParams& params, bool do_replace)
         PCWSTR pst = search_text;
         for (UINT i = 0; i < search_text.length(); i++)
         {
-            pstu[2 * i] = 0;
-            pstu[2 * i + 1] = pst[i];
+            pstu[2 * i] = pst[i];
+            pstu[2 * i + 1] = 0;
         }
         // only rrx::LITERAL and possibly rrx::IGNORE_CASE matter in this case
         const UINT uflags = rrx::LITERAL | (m_search_flags & rrx::IGNORE_CASE);
