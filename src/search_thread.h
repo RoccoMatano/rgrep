@@ -40,16 +40,16 @@ struct SearchResult
     UINT            path_prefix_len;
 };
 
-using SearchResults =cvector<SearchResult>;
+using SearchResults = cvector<SearchResult>;
 
 ////////////////////////////////////////////////////////////////////////////////
 
-using NEXT_FILE_CB = void(*)(void *pCtxt, bool was_searched, PCWSTR name);
-using END_SEARCH_CB = void(*)(void *pCtxt);
-using MATCH_FOUND_CB = void(*)(void *pCtxt, size_t matches, SearchResult& res);
-
 struct SearchParams
 {
+    using NextFileCb = void(*)(void *pCtxt, bool was_searched, PCWSTR name);
+    using EndSearchCb = void(*)(void *pCtxt);
+    using MatchFoundCb = void(*)(void *pCtxt, size_t matches, SearchResult& res);
+
     Yast            search_path;
     Yast            replace_text;
     YastVector      inc_patterns;
@@ -58,9 +58,9 @@ struct SearchParams
     rrx::ptr        rx_exclude;
     rrx::ptr        rx_include;
     void*           p_ctxt;
-    NEXT_FILE_CB    next_cb;
-    MATCH_FOUND_CB  match_found_cb;
-    END_SEARCH_CB   end_search_cb;
+    NextFileCb      next_cb;
+    MatchFoundCb    match_found_cb;
+    EndSearchCb     end_search_cb;
     bool            search_subdirs;
     bool            search_binary;
     bool            do_replace;
